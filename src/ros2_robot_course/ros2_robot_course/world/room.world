@@ -1,0 +1,3013 @@
+<?xml version="1.0" ?>
+<!--
+  room.world  ——  华丽宫殿大厅（Palace Hall）
+
+  由 world/generate_palace.py 自动生成。场景包含：
+    高柱廊、墙面浮雕、壁柱、金色檐口、方格大理石地面、红毯、
+    中央喷泉雕像、拱形彩窗与多盏暖色点光源；顶部开放，无天花板。
+  碰撞体仅保留四壁、柱廊、喷泉、壁柱，用于激光/SLAM/导航；
+  其余为纯视觉装饰，保证仿真性能。
+-->
+<sdf version="1.6">
+  <world name="palace_hall">
+
+    <physics name="default_physics" default="true" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+
+    <scene>
+      <ambient>0.60 0.58 0.62 1</ambient>
+      <background>0.42 0.55 0.78 1</background>
+      <shadows>true</shadows>
+    </scene>
+
+    <gui>
+      <camera name="user_camera">
+        <pose>-16 -14 12 0 0.75 0.85</pose>
+      </camera>
+    </gui>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <light name="chandelier_light_0" type="point">
+      <pose>-5.0 0 7.6 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>1.0 0.86 0.60 1</diffuse>
+      <specular>1.0 0.92 0.72 1</specular>
+      <attenuation>
+        <range>22</range><constant>0.45</constant><linear>0.04</linear><quadratic>0.006</quadratic>
+      </attenuation>
+    </light>
+    <light name="chandelier_light_1" type="point">
+      <pose>0.0 0 7.6 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>1.0 0.86 0.60 1</diffuse>
+      <specular>1.0 0.92 0.72 1</specular>
+      <attenuation>
+        <range>22</range><constant>0.45</constant><linear>0.04</linear><quadratic>0.006</quadratic>
+      </attenuation>
+    </light>
+    <light name="chandelier_light_2" type="point">
+      <pose>5.0 0 7.6 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>1.0 0.86 0.60 1</diffuse>
+      <specular>1.0 0.92 0.72 1</specular>
+      <attenuation>
+        <range>22</range><constant>0.45</constant><linear>0.04</linear><quadratic>0.006</quadratic>
+      </attenuation>
+    </light>
+    <light name="corner_light_0" type="point">
+      <pose>-8 -5 6.8 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.75 0.72 0.95 1</diffuse>
+      <specular>0.8 0.8 1.0 1</specular>
+      <attenuation>
+        <range>18</range><constant>0.5</constant><linear>0.05</linear><quadratic>0.008</quadratic>
+      </attenuation>
+    </light>
+    <light name="corner_light_1" type="point">
+      <pose>8 -5 6.8 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.75 0.72 0.95 1</diffuse>
+      <specular>0.8 0.8 1.0 1</specular>
+      <attenuation>
+        <range>18</range><constant>0.5</constant><linear>0.05</linear><quadratic>0.008</quadratic>
+      </attenuation>
+    </light>
+    <light name="corner_light_2" type="point">
+      <pose>-8 5 6.8 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.75 0.72 0.95 1</diffuse>
+      <specular>0.8 0.8 1.0 1</specular>
+      <attenuation>
+        <range>18</range><constant>0.5</constant><linear>0.05</linear><quadratic>0.008</quadratic>
+      </attenuation>
+    </light>
+    <light name="corner_light_3" type="point">
+      <pose>8 5 6.8 0 0 0</pose>
+      <cast_shadows>true</cast_shadows>
+      <diffuse>0.75 0.72 0.95 1</diffuse>
+      <specular>0.8 0.8 1.0 1</specular>
+      <attenuation>
+        <range>18</range><constant>0.5</constant><linear>0.05</linear><quadratic>0.008</quadratic>
+      </attenuation>
+    </light>
+    <model name="palace_floor">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="link">
+        <visual name="tile_0">
+          <pose>-8 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_1">
+          <pose>-8 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_2">
+          <pose>-8 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_3">
+          <pose>-8 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_4">
+          <pose>-8 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_5">
+          <pose>-8 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_6">
+          <pose>-6 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_7">
+          <pose>-6 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_8">
+          <pose>-6 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_9">
+          <pose>-6 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_10">
+          <pose>-6 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_11">
+          <pose>-6 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_12">
+          <pose>-4 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_13">
+          <pose>-4 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_14">
+          <pose>-4 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_15">
+          <pose>-4 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_16">
+          <pose>-4 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_17">
+          <pose>-4 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_18">
+          <pose>-2 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_19">
+          <pose>-2 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_20">
+          <pose>-2 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_21">
+          <pose>-2 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_22">
+          <pose>-2 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_23">
+          <pose>-2 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_24">
+          <pose>0 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_25">
+          <pose>0 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_26">
+          <pose>0 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_27">
+          <pose>0 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_28">
+          <pose>0 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_29">
+          <pose>0 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_30">
+          <pose>2 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_31">
+          <pose>2 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_32">
+          <pose>2 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_33">
+          <pose>2 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_34">
+          <pose>2 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_35">
+          <pose>2 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_36">
+          <pose>4 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_37">
+          <pose>4 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_38">
+          <pose>4 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_39">
+          <pose>4 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_40">
+          <pose>4 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_41">
+          <pose>4 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_42">
+          <pose>6 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_43">
+          <pose>6 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_44">
+          <pose>6 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_45">
+          <pose>6 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_46">
+          <pose>6 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_47">
+          <pose>6 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_48">
+          <pose>8 -5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_49">
+          <pose>8 -3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_50">
+          <pose>8 -1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_51">
+          <pose>8 1 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_52">
+          <pose>8 3 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="tile_53">
+          <pose>8 5 0.01</pose>
+          <geometry><box><size>2.0 2.0 0.02</size></box></geometry>
+          <material>
+        <ambient>0.12 0.09 0.16 1</ambient>
+        <diffuse>0.26 0.20 0.34 1</diffuse>
+        <specular>0.85 0.80 0.95 1</specular>
+        <emissive>0.01 0.01 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="carpet">
+          <pose>0 0 0.03</pose>
+          <geometry><box><size>12.0 2.4 0.03</size></box></geometry>
+          <material>
+        <ambient>0.30 0.08 0.09 1</ambient>
+        <diffuse>0.70 0.16 0.18 1</diffuse>
+        <specular>0.5 0.3 0.3 1</specular>
+        <emissive>0.03 0.0 0.0 1</emissive>
+      </material>
+        </visual>
+        <visual name="carpet_gold_a">
+          <pose>0 1.25 0.03</pose>
+          <geometry><box><size>12.4 0.1 0.035</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="carpet_gold_b">
+          <pose>0 -1.25 0.03</pose>
+          <geometry><box><size>12.4 0.1 0.035</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="inlay_gold_ring">
+          <pose>0 0 0.03</pose>
+          <geometry><cylinder><radius>4.2</radius><length>0.02</length></cylinder></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="inlay_gold_ring2">
+          <pose>0 0 0.03</pose>
+          <geometry><cylinder><radius>4.35</radius><length>0.02</length></cylinder></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="wall_north">
+      <static>true</static>
+      <pose>0 6.3 4.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>19.2 0.6 8.0</size></box></geometry>
+        </collision>
+        <visual name="wall">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>19.2 0.6 8.0</size></box></geometry>
+          <material>
+        <ambient>0.45 0.42 0.38 1</ambient>
+        <diffuse>0.90 0.87 0.80 1</diffuse>
+        <specular>0.30 0.30 0.28 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cornice">
+          <pose>0 -0.3199999999999994 5.6</pose>
+          <geometry><box><size>19.2 0.22 0.5</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="wall_south">
+      <static>true</static>
+      <pose>0 -6.3 4.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>19.2 0.6 8.0</size></box></geometry>
+        </collision>
+        <visual name="wall">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>19.2 0.6 8.0</size></box></geometry>
+          <material>
+        <ambient>0.45 0.42 0.38 1</ambient>
+        <diffuse>0.90 0.87 0.80 1</diffuse>
+        <specular>0.30 0.30 0.28 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cornice">
+          <pose>0 0.3199999999999994 5.6</pose>
+          <geometry><box><size>19.2 0.22 0.5</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="wall_east">
+      <static>true</static>
+      <pose>9.3 0 4.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>0.6 13.2 8.0</size></box></geometry>
+        </collision>
+        <visual name="wall">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>0.6 13.2 8.0</size></box></geometry>
+          <material>
+        <ambient>0.45 0.42 0.38 1</ambient>
+        <diffuse>0.90 0.87 0.80 1</diffuse>
+        <specular>0.30 0.30 0.28 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cornice">
+          <pose>-0.3200000000000003 0 5.6</pose>
+          <geometry><box><size>0.22 13.2 0.5</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="wall_west">
+      <static>true</static>
+      <pose>-9.3 0 4.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>0.6 13.2 8.0</size></box></geometry>
+        </collision>
+        <visual name="wall">
+          <pose>0 0 0 0 0 0</pose>
+          <geometry><box><size>0.6 13.2 8.0</size></box></geometry>
+          <material>
+        <ambient>0.45 0.42 0.38 1</ambient>
+        <diffuse>0.90 0.87 0.80 1</diffuse>
+        <specular>0.30 0.30 0.28 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cornice">
+          <pose>0.3200000000000003 0 5.6</pose>
+          <geometry><box><size>0.22 13.2 0.5</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="wall_reliefs">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="link">
+        <visual name="r_n_-8.5">
+          <pose>-8.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-8.5">
+          <pose>-8.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-7.5">
+          <pose>-7.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-7.5">
+          <pose>-7.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-6.5">
+          <pose>-6.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-6.5">
+          <pose>-6.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-5.5">
+          <pose>-5.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-5.5">
+          <pose>-5.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-4.5">
+          <pose>-4.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-4.5">
+          <pose>-4.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-3.5">
+          <pose>-3.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-3.5">
+          <pose>-3.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-2.5">
+          <pose>-2.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-2.5">
+          <pose>-2.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-1.5">
+          <pose>-1.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-1.5">
+          <pose>-1.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_-0.5">
+          <pose>-0.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_-0.5">
+          <pose>-0.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_0.5">
+          <pose>0.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_0.5">
+          <pose>0.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_1.5">
+          <pose>1.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_1.5">
+          <pose>1.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_2.5">
+          <pose>2.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_2.5">
+          <pose>2.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_3.5">
+          <pose>3.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_3.5">
+          <pose>3.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_4.5">
+          <pose>4.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_4.5">
+          <pose>4.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_5.5">
+          <pose>5.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_5.5">
+          <pose>5.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_6.5">
+          <pose>6.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_6.5">
+          <pose>6.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_7.5">
+          <pose>7.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_7.5">
+          <pose>7.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_n_8.5">
+          <pose>8.5 5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_s_8.5">
+          <pose>8.5 -5.94 2.6</pose>
+          <geometry><box><size>0.55 0.14 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_-5.5">
+          <pose>8.94 -5.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_-5.5">
+          <pose>-8.94 -5.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_-4.5">
+          <pose>8.94 -4.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_-4.5">
+          <pose>-8.94 -4.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_-3.5">
+          <pose>8.94 -3.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_-3.5">
+          <pose>-8.94 -3.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_-2.5">
+          <pose>8.94 -2.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_-2.5">
+          <pose>-8.94 -2.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_-1.5">
+          <pose>8.94 -1.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_-1.5">
+          <pose>-8.94 -1.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_-0.5">
+          <pose>8.94 -0.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_-0.5">
+          <pose>-8.94 -0.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_0.5">
+          <pose>8.94 0.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_0.5">
+          <pose>-8.94 0.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_1.5">
+          <pose>8.94 1.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_1.5">
+          <pose>-8.94 1.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_2.5">
+          <pose>8.94 2.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_2.5">
+          <pose>-8.94 2.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_3.5">
+          <pose>8.94 3.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_3.5">
+          <pose>-8.94 3.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_4.5">
+          <pose>8.94 4.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_4.5">
+          <pose>-8.94 4.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_e_5.5">
+          <pose>8.94 5.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="r_w_5.5">
+          <pose>-8.94 5.5 2.6</pose>
+          <geometry><box><size>0.14 0.55 0.55</size></box></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="pilasters">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="link">
+        <collision name="c_n_0">
+          <pose>-7.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_s_0">
+          <pose>-7.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_n_1">
+          <pose>-4.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_s_1">
+          <pose>-4.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_n_2">
+          <pose>-1.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_s_2">
+          <pose>-1.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_n_3">
+          <pose>1.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_s_3">
+          <pose>1.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_n_4">
+          <pose>4.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_s_4">
+          <pose>4.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_n_5">
+          <pose>7.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_s_5">
+          <pose>7.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_e_0">
+          <pose>8.76 -4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_w_0">
+          <pose>-8.76 -4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_e_1">
+          <pose>8.76 0.0 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_w_1">
+          <pose>-8.76 0.0 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_e_2">
+          <pose>8.76 4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <collision name="c_w_2">
+          <pose>-8.76 4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+        </collision>
+        <visual name="pil_n_0">
+          <pose>-7.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_n_0">
+          <pose>-7.5 5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_n_0">
+          <pose>-7.5 5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_s_0">
+          <pose>-7.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_s_0">
+          <pose>-7.5 -5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_s_0">
+          <pose>-7.5 -5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_n_1">
+          <pose>-4.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_n_1">
+          <pose>-4.5 5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_n_1">
+          <pose>-4.5 5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_s_1">
+          <pose>-4.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_s_1">
+          <pose>-4.5 -5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_s_1">
+          <pose>-4.5 -5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_n_2">
+          <pose>-1.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_n_2">
+          <pose>-1.5 5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_n_2">
+          <pose>-1.5 5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_s_2">
+          <pose>-1.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_s_2">
+          <pose>-1.5 -5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_s_2">
+          <pose>-1.5 -5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_n_3">
+          <pose>1.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_n_3">
+          <pose>1.5 5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_n_3">
+          <pose>1.5 5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_s_3">
+          <pose>1.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_s_3">
+          <pose>1.5 -5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_s_3">
+          <pose>1.5 -5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_n_4">
+          <pose>4.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_n_4">
+          <pose>4.5 5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_n_4">
+          <pose>4.5 5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_s_4">
+          <pose>4.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_s_4">
+          <pose>4.5 -5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_s_4">
+          <pose>4.5 -5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_n_5">
+          <pose>7.5 5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_n_5">
+          <pose>7.5 5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_n_5">
+          <pose>7.5 5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_s_5">
+          <pose>7.5 -5.76 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_s_5">
+          <pose>7.5 -5.76 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_s_5">
+          <pose>7.5 -5.76 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_e_0">
+          <pose>8.76 -4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_e_0">
+          <pose>8.76 -4.5 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_e_0">
+          <pose>8.76 -4.5 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_w_0">
+          <pose>-8.76 -4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_w_0">
+          <pose>-8.76 -4.5 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_w_0">
+          <pose>-8.76 -4.5 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_e_1">
+          <pose>8.76 0.0 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_e_1">
+          <pose>8.76 0.0 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_e_1">
+          <pose>8.76 0.0 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_w_1">
+          <pose>-8.76 0.0 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_w_1">
+          <pose>-8.76 0.0 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_w_1">
+          <pose>-8.76 0.0 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_e_2">
+          <pose>8.76 4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_e_2">
+          <pose>8.76 4.5 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_e_2">
+          <pose>8.76 4.5 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pil_w_2">
+          <pose>-8.76 4.5 3.3</pose>
+          <geometry><cylinder><radius>0.4</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilbase_w_2">
+          <pose>-8.76 4.5 0.18</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="pilcap_w_2">
+          <pose>-8.76 4.5 6.8</pose>
+          <geometry><box><size>0.95 0.95 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="colonnade">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="col_0_0">
+        <pose>-6.0 -3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <link name="col_0_1">
+        <pose>-6.0 3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <link name="col_1_0">
+        <pose>-2.0 -3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <link name="col_1_1">
+        <pose>-2.0 3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <link name="col_2_0">
+        <pose>2.0 -3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <link name="col_2_1">
+        <pose>2.0 3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <link name="col_3_0">
+        <pose>6.0 -3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+      <link name="col_3_1">
+        <pose>6.0 3.0 0 0 0 0</pose>
+        <visual name="shaft">
+          <pose>0 0 3.3</pose>
+          <geometry><cylinder><radius>0.45</radius><length>6.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="base1">
+          <pose>0 0 0.18</pose>
+          <geometry><box><size>1.1 1.1 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="base2">
+          <pose>0 0 0.50</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.3</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap1">
+          <pose>0 0 6.78</pose>
+          <geometry><cylinder><radius>0.55</radius><length>0.35</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="cap2">
+          <pose>0 0 7.13</pose>
+          <geometry><box><size>1.05 1.05 0.35</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <collision name="collision">
+          <pose>0 0 3.65</pose>
+          <geometry><cylinder><radius>0.55</radius><length>7.3</length></cylinder></geometry>
+        </collision>
+      </link>
+
+    </model>
+    <model name="central_fountain">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <pose>0 0 0.3</pose>
+          <geometry><cylinder><radius>1.4</radius><length>0.6</length></cylinder></geometry>
+        </collision>
+        <visual name="basin">
+          <pose>0 0 0.3</pose>
+          <geometry><cylinder><radius>1.4</radius><length>0.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="basin_rim">
+          <pose>0 0 0.62</pose>
+          <geometry><cylinder><radius>1.48</radius><length>0.14</length></cylinder></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="water">
+          <pose>0 0 0.58</pose>
+          <geometry><cylinder><radius>1.2799999999999998</radius><length>0.02</length></cylinder></geometry>
+          <material>
+        <ambient>0.05 0.15 0.30 1</ambient>
+        <diffuse>0.15 0.45 0.75 1</diffuse>
+        <specular>1.0 1.0 1.0 1</specular>
+        <emissive>0.03 0.10 0.18 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="pedestal">
+          <pose>0 0 1.4</pose>
+          <geometry><cylinder><radius>0.45</radius><length>1.6</length></cylinder></geometry>
+          <material>
+        <ambient>0.42 0.40 0.36 1</ambient>
+        <diffuse>0.88 0.85 0.78 1</diffuse>
+        <specular>0.65 0.63 0.58 1</specular>
+        <emissive>0.02 0.02 0.02 1</emissive>
+      </material>
+        </visual>
+        <visual name="pedestal_gold">
+          <pose>0 0 2.2</pose>
+          <geometry><cylinder><radius>0.5</radius><length>0.12</length></cylinder></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="statue">
+          <pose>0 0 2.95</pose>
+          <geometry><cylinder><radius>0.28</radius><length>1.4</length></cylinder></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="statue_head">
+          <pose>0 0 3.8</pose>
+          <geometry><sphere><radius>0.24</radius></sphere></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="statue_arms">
+          <pose>0 0 3.35</pose>
+          <geometry><box><size>1.4 0.18 0.18</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+    <model name="stained_windows">
+      <static>true</static>
+      <pose>0 0 0 0 0 0</pose>
+      <link name="link">
+        <visual name="win_n_-6">
+          <pose>-6 5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_n_-6">
+          <pose>-6 5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_n_-6">
+          <pose>-6 5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_s_-6">
+          <pose>-6 -5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_s_-6">
+          <pose>-6 -5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_s_-6">
+          <pose>-6 -5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_n_-3">
+          <pose>-3 5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_n_-3">
+          <pose>-3 5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_n_-3">
+          <pose>-3 5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_s_-3">
+          <pose>-3 -5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_s_-3">
+          <pose>-3 -5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_s_-3">
+          <pose>-3 -5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_n_0">
+          <pose>0 5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_n_0">
+          <pose>0 5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_n_0">
+          <pose>0 5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_s_0">
+          <pose>0 -5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_s_0">
+          <pose>0 -5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_s_0">
+          <pose>0 -5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_n_3">
+          <pose>3 5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_n_3">
+          <pose>3 5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_n_3">
+          <pose>3 5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_s_3">
+          <pose>3 -5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_s_3">
+          <pose>3 -5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_s_3">
+          <pose>3 -5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_n_6">
+          <pose>6 5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_n_6">
+          <pose>6 5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_n_6">
+          <pose>6 5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_s_6">
+          <pose>6 -5.95 4.4</pose>
+          <geometry><box><size>1.8 0.1 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_arch_s_6">
+          <pose>6 -5.95 6.0</pose>
+          <geometry><cylinder><radius>0.9</radius><length>0.1</length></cylinder></geometry>
+          <material>
+        <ambient>0.45 0.35 0.10 1</ambient>
+        <diffuse>1.0 0.85 0.45 1</diffuse>
+        <specular>1.0 1.0 0.8 1</specular>
+        <emissive>0.45 0.35 0.12 1</emissive>
+      </material>
+          <transparency>0.25</transparency>
+        </visual>
+        <visual name="win_frame_s_6">
+          <pose>6 -5.95 4.4</pose>
+          <geometry><box><size>2.0 0.06 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_e_-2.5">
+          <pose>8.95 -2.5 4.4</pose>
+          <geometry><box><size>0.1 1.8 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_frame_e_-2.5">
+          <pose>8.95 -2.5 4.4</pose>
+          <geometry><box><size>0.06 2.0 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_w_-2.5">
+          <pose>-8.95 -2.5 4.4</pose>
+          <geometry><box><size>0.1 1.8 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_frame_w_-2.5">
+          <pose>-8.95 -2.5 4.4</pose>
+          <geometry><box><size>0.06 2.0 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_e_2.5">
+          <pose>8.95 2.5 4.4</pose>
+          <geometry><box><size>0.1 1.8 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_frame_e_2.5">
+          <pose>8.95 2.5 4.4</pose>
+          <geometry><box><size>0.06 2.0 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+        <visual name="win_w_2.5">
+          <pose>-8.95 2.5 4.4</pose>
+          <geometry><box><size>0.1 1.8 3.2</size></box></geometry>
+          <material>
+        <ambient>0.10 0.18 0.45 1</ambient>
+        <diffuse>0.25 0.45 0.95 1</diffuse>
+        <specular>0.9 0.9 1.0 1</specular>
+        <emissive>0.18 0.28 0.55 1</emissive>
+      </material>
+          <transparency>0.35</transparency>
+        </visual>
+        <visual name="win_frame_w_2.5">
+          <pose>-8.95 2.5 4.4</pose>
+          <geometry><box><size>0.06 2.0 3.6</size></box></geometry>
+          <material>
+        <ambient>0.38 0.28 0.07 1</ambient>
+        <diffuse>0.92 0.72 0.24 1</diffuse>
+        <specular>1.0 0.95 0.6 1</specular>
+        <emissive>0.10 0.07 0.01 1</emissive>
+      </material>
+        </visual>
+      </link>
+    </model>
+  </world>
+</sdf>

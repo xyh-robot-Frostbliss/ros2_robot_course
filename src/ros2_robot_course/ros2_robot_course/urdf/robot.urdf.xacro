@@ -1,0 +1,548 @@
+<?xml version="1.0"?>
+<!--
+  robot.urdf.xacro
+
+  两轮差速移动机器人（Differential Drive Mobile Robot）：
+    * base_link        底盘主体
+    * left/right_wheel_link  差速驱动轮（continuous joint，绕 y 轴）
+    * caster_link      万向支撑轮（后部，球体）
+    * laser_link       二维激光雷达（固定安装于底盘顶部前侧）
+
+  TF 链：map <- odom <- base_link <- laser_link
+    - odom      -> base_link  由 Gazebo diff_drive 插件发布
+    - base_link -> laser_link 由 robot_state_publisher 依据 fixed joint 发布
+    - map       -> odom       SLAM 时由 slam_toolbox 发布；定位时由 AMCL 发布
+
+  话题：/cmd_vel (订阅)  /odom (发布)  /scan (发布)  /joint_states (发布)
+-->
+<robot name="ros2_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ===================== 尺寸 / 质量参数 ===================== -->
+  <xacro:property name="PI" value="3.14159265359"/>
+  <xacro:property name="base_length" value="0.40"/>   <!-- 车长(x) -->
+  <xacro:property name="base_width"  value="0.30"/>   <!-- 车宽(y) -->
+  <xacro:property name="base_height" value="0.12"/>   <!-- 车高(z) -->
+  <xacro:property name="base_mass"   value="4.0"/>
+  <!-- 底盘中心离地高度：高于驱动轮半径，保证驱动轮着地、底盘不拖地 -->
+  <xacro:property name="base_center_z" value="0.14"/>
+
+  <xacro:property name="wheel_radius"    value="0.06"/>
+  <xacro:property name="wheel_width"     value="0.04"/>
+  <xacro:property name="wheel_offset_y"  value="0.17"/>   <!-- 两轮半间距 -> 轮距 0.34 -->
+  <xacro:property name="wheel_offset_z"  value="0.06"/>
+  <xacro:property name="wheel_mass"      value="0.5"/>
+
+  <xacro:property name="caster_radius" value="0.03"/>
+  <xacro:property name="caster_mass"   value="0.2"/>
+
+  <xacro:property name="laser_mass" value="0.15"/>
+
+  <material name="grey">   <color rgba="0.5 0.5 0.5 1.0"/></material>
+  <material name="dark">   <color rgba="0.1 0.1 0.1 1.0"/></material>
+  <material name="blue">   <color rgba="0.1 0.3 0.8 1.0"/></material>
+  <material name="red">    <color rgba="0.8 0.1 0.1 1.0"/></material>
+
+  <!-- 科幻摄像头配色 -->
+  <material name="purple_metal"><color rgba="0.22 0.06 0.34 1.0"/></material>
+  <material name="purple_glow"> <color rgba="0.68 0.18 0.98 1.0"/></material>
+  <material name="dark_metal">  <color rgba="0.07 0.07 0.10 1.0"/></material>
+  <material name="lens_glass">  <color rgba="0.36 0.12 0.78 0.55"/></material>
+  <material name="blue_glow">   <color rgba="0.25 0.45 1.0 1.0"/></material>
+
+  <!-- ===================== 惯性矩阵宏 ===================== -->
+  <xacro:macro name="box_inertia" params="m x y z">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia
+        ixx="${m*(y*y+z*z)/12.0}" ixy="0.0" ixz="0.0"
+        iyy="${m*(x*x+z*z)/12.0}" iyz="0.0"
+        izz="${m*(x*x+y*y)/12.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="cylinder_inertia" params="m r h">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia
+        ixx="${m*(3.0*r*r+h*h)/12.0}" ixy="0.0" ixz="0.0"
+        iyy="${m*(3.0*r*r+h*h)/12.0}" iyz="0.0"
+        izz="${m*r*r/2.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="sphere_inertia" params="m r">
+    <inertial>
+      <mass value="${m}"/>
+      <inertia
+        ixx="${2.0*m*r*r/5.0}" ixy="0.0" ixz="0.0"
+        iyy="${2.0*m*r*r/5.0}" iyz="0.0"
+        izz="${2.0*m*r*r/5.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <!-- ===================== base_link 底盘 ===================== -->
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 ${base_center_z}" rpy="0 0 0"/>
+      <geometry><box size="${base_length} ${base_width} ${base_height}"/></geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 ${base_center_z}" rpy="0 0 0"/>
+      <geometry><box size="${base_length} ${base_width} ${base_height}"/></geometry>
+    </collision>
+    <xacro:box_inertia m="${base_mass}" x="${base_length}" y="${base_width}" z="${base_height}"/>
+  </link>
+
+  <!-- 雷达安装座（装饰） -->
+  <link name="laser_mount_link">
+    <visual>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.06"/></geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.04" length="0.06"/></geometry>
+    </collision>
+    <xacro:cylinder_inertia m="0.05" r="0.04" h="0.06"/>
+  </link>
+
+  <joint name="laser_mount_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="laser_mount_link"/>
+    <origin xyz="0.10 0 ${base_center_z + base_height/2.0}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- 二维激光雷达 -->
+  <link name="laser_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.05"/></geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><cylinder radius="0.05" length="0.05"/></geometry>
+    </collision>
+    <xacro:cylinder_inertia m="${laser_mass}" r="0.05" h="0.05"/>
+  </link>
+
+  <joint name="laser_joint" type="fixed">
+    <parent link="laser_mount_link"/>
+    <child link="laser_link"/>
+    <origin xyz="0 0 0.075" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ===================== 前置科幻摄像头（紫色） =====================
+       深紫色金属外壳 + 半透明紫蓝渐变玻璃镜头 + 环形灯带 + 细密机械结构；
+       居中安装于车头前方（y=0），镜头朝 +x，水平 180° 超广角。
+  -->
+  <link name="camera_mount_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.04 0.12 0.02"/></geometry>
+      <material name="dark_metal"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0.05 0.03" rpy="0 0 0"/>
+      <geometry><box size="0.035 0.02 0.05"/></geometry>
+      <material name="purple_metal"/>
+    </visual>
+    <visual>
+      <origin xyz="0 -0.05 0.03" rpy="0 0 0"/>
+      <geometry><box size="0.035 0.02 0.05"/></geometry>
+      <material name="purple_metal"/>
+    </visual>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.00006" ixy="0" ixz="0" iyy="0.00006" iyz="0" izz="0.00006"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_mount_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_mount_link"/>
+    <origin xyz="0.15 0 0.15" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_housing_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><box size="0.10 0.10 0.09"/></geometry>
+      <material name="purple_metal"/>
+    </visual>
+    <visual>
+      <origin xyz="0 0 0.052" rpy="0 0 0"/>
+      <geometry><box size="0.09 0.09 0.014"/></geometry>
+      <material name="purple_metal"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.02 0 -0.05" rpy="0 0 0"/>
+      <geometry><box size="0.05 0.08 0.012"/></geometry>
+      <material name="dark_metal"/>
+    </visual>
+    <visual>
+      <origin xyz="0.01 0 0.062" rpy="0 0 0"/>
+      <geometry><box size="0.06 0.008 0.006"/></geometry>
+      <material name="purple_glow"/>
+    </visual>
+    <visual>
+      <origin xyz="0.01 0.025 0.062" rpy="0 0 0"/>
+      <geometry><box size="0.06 0.008 0.006"/></geometry>
+      <material name="purple_glow"/>
+    </visual>
+    <visual>
+      <origin xyz="0.01 -0.025 0.062" rpy="0 0 0"/>
+      <geometry><box size="0.06 0.008 0.006"/></geometry>
+      <material name="purple_glow"/>
+    </visual>
+    <inertial>
+      <mass value="0.12"/>
+      <inertia ixx="0.00014" ixy="0" ixz="0" iyy="0.00014" iyz="0" izz="0.0002"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_body_joint" type="fixed">
+    <parent link="camera_mount_link"/>
+    <child link="camera_housing_link"/>
+    <origin xyz="0.05 0 0.01" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_ring_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 ${PI/2.0} 0"/>
+      <geometry><cylinder radius="0.058" length="0.012"/></geometry>
+      <material name="purple_glow"/>
+    </visual>
+    <inertial>
+      <mass value="0.02"/>
+      <inertia ixx="0.00002" ixy="0" ixz="0" iyy="0.00002" iyz="0" izz="0.00003"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_ring_joint" type="fixed">
+    <parent link="camera_housing_link"/>
+    <child link="camera_ring_link"/>
+    <origin xyz="0.052 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_barrel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 ${PI/2.0} 0"/>
+      <geometry><cylinder radius="0.046" length="0.03"/></geometry>
+      <material name="dark_metal"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.015 0 0" rpy="0 ${PI/2.0} 0"/>
+      <geometry><cylinder radius="0.05" length="0.006"/></geometry>
+      <material name="purple_metal"/>
+    </visual>
+    <visual>
+      <origin xyz="-0.025 0 0" rpy="0 ${PI/2.0} 0"/>
+      <geometry><cylinder radius="0.05" length="0.006"/></geometry>
+      <material name="purple_metal"/>
+    </visual>
+    <inertial>
+      <mass value="0.06"/>
+      <inertia ixx="0.00003" ixy="0" ixz="0" iyy="0.00003" iyz="0" izz="0.00004"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_barrel_joint" type="fixed">
+    <parent link="camera_housing_link"/>
+    <child link="camera_barrel_link"/>
+    <origin xyz="0.058 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_lens_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 ${PI/2.0} 0"/>
+      <geometry><cylinder radius="0.04" length="0.008"/></geometry>
+      <material name="lens_glass"/>
+    </visual>
+    <inertial>
+      <mass value="0.02"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.00001" iyz="0" izz="0.00002"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_lens_joint" type="fixed">
+    <parent link="camera_barrel_link"/>
+    <child link="camera_lens_link"/>
+    <origin xyz="0.02 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_lens_core_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="0.026"/></geometry>
+      <material name="blue_glow"/>
+    </visual>
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="0.000005" ixy="0" ixz="0" iyy="0.000005" iyz="0" izz="0.000005"/>
+    </inertial>
+  </link>
+
+  <joint name="camera_lens_core_joint" type="fixed">
+    <parent link="camera_lens_link"/>
+    <child link="camera_lens_core_link"/>
+    <origin xyz="0.003 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="camera_optical_frame"/>
+  <joint name="camera_optical_joint" type="fixed">
+    <parent link="camera_lens_link"/>
+    <child link="camera_optical_frame"/>
+    <origin xyz="0 0 0" rpy="-${PI/2.0} 0 -${PI/2.0}"/>
+  </joint>
+
+
+  <!-- ===================== 差速驱动轮 ===================== -->
+  <xacro:macro name="wheel" params="prefix y">
+    <link name="${prefix}_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI/2.0} 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+        <material name="grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI/2.0} 0 0"/>
+        <geometry><cylinder radius="${wheel_radius}" length="${wheel_width}"/></geometry>
+      </collision>
+      <xacro:cylinder_inertia m="${wheel_mass}" r="${wheel_radius}" h="${wheel_width}"/>
+    </link>
+
+    <joint name="${prefix}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${prefix}_wheel_link"/>
+      <origin xyz="0 ${y} ${wheel_offset_z}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <dynamics damping="0.05" friction="0.0"/>
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel prefix="left"  y="${ wheel_offset_y}"/>
+  <xacro:wheel prefix="right" y="${-wheel_offset_y}"/>
+
+  <!-- ===================== 万向支撑轮 ===================== -->
+  <link name="caster_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="${caster_radius}"/></geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="${caster_radius}"/></geometry>
+    </collision>
+    <xacro:sphere_inertia m="${caster_mass}" r="${caster_radius}"/>
+  </link>
+
+  <joint name="caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_link"/>
+    <origin xyz="-0.15 0 ${caster_radius}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- 前万向支撑轮：抵消前置摄像头造成的重心前移，保持车身水平、雷达扫描面正确 -->
+  <link name="caster_front_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="${caster_radius}"/></geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry><sphere radius="${caster_radius}"/></geometry>
+    </collision>
+    <xacro:sphere_inertia m="${caster_mass}" r="${caster_radius}"/>
+  </link>
+
+  <joint name="caster_front_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="caster_front_link"/>
+    <origin xyz="0.15 0 ${caster_radius}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ===================== Gazebo 物理属性 ===================== -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <gazebo reference="left_wheel_link">
+    <material>Gazebo/Black</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+  </gazebo>
+
+  <gazebo reference="right_wheel_link">
+    <material>Gazebo/Black</material>
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+  </gazebo>
+
+  <gazebo reference="caster_link">
+    <material>Gazebo/Black</material>
+    <mu1>0.01</mu1>
+    <mu2>0.01</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+  </gazebo>
+
+  <gazebo reference="caster_front_link">
+    <material>Gazebo/Black</material>
+    <mu1>0.01</mu1>
+    <mu2>0.01</mu2>
+    <kp>1000000.0</kp>
+    <kd>1.0</kd>
+  </gazebo>
+
+  <gazebo reference="laser_link">
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+  <!-- 摄像头各部件 Gazebo 材质（紫色科幻风：金属外壳/发光灯带/半透明玻璃） -->
+  <gazebo reference="camera_mount_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="camera_housing_link">
+    <material>Gazebo/Indigo</material>
+  </gazebo>
+  <gazebo reference="camera_ring_link">
+    <material>Gazebo/PurpleGlow</material>
+  </gazebo>
+  <gazebo reference="camera_barrel_link">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <gazebo reference="camera_lens_link">
+    <material>Gazebo/DarkMagentaTransparent</material>
+  </gazebo>
+  <gazebo reference="camera_lens_core_link">
+    <material>Gazebo/BlueGlow</material>
+  </gazebo>
+
+  <!-- ===================== 前置摄像头传感器（水平 180° 超广角） ===================== -->
+  <gazebo reference="camera_lens_link">
+    <sensor name="front_camera" type="camera">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>30</update_rate>
+      <pose>0 0 0 0 0 0</pose>
+      <camera name="front_camera">
+        <horizontal_fov>3.1415</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>100.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>/</namespace>
+        </ros>
+        <camera_name>camera</camera_name>
+        <frame_name>camera_optical_frame</frame_name>
+        <hack_baseline>0.07</hack_baseline>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- ===================== 差速驱动控制器插件 ===================== -->
+  <gazebo>
+    <plugin name="diff_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <ros>
+        <namespace>/</namespace>
+        <remapping>cmd_vel:=cmd_vel</remapping>
+        <remapping>odom:=odom</remapping>
+      </ros>
+
+      <update_rate>50</update_rate>
+
+      <!-- 关节与轮参数 -->
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
+      <wheel_separation>${2.0*wheel_offset_y}</wheel_separation>
+      <wheel_diameter>${2.0*wheel_radius}</wheel_diameter>
+
+      <max_wheel_torque>20.0</max_wheel_torque>
+      <max_wheel_acceleration>2.0</max_wheel_acceleration>
+
+      <!-- 话题与坐标系（TF: odom -> base_link） -->
+      <command_topic>cmd_vel</command_topic>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_link</robot_base_frame>
+
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>false</publish_wheel_tf>
+    </plugin>
+
+    <!-- 发布轮子关节状态，供 robot_state_publisher 计算轮子 TF -->
+    <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <ros>
+        <namespace>/</namespace>
+        <remapping>~/out:=joint_states</remapping>
+      </ros>
+      <update_rate>30</update_rate>
+      <joint_name>left_wheel_joint</joint_name>
+      <joint_name>right_wheel_joint</joint_name>
+    </plugin>
+  </gazebo>
+
+  <!-- ===================== 二维激光雷达插件 ===================== -->
+  <gazebo reference="laser_link">
+    <sensor name="laser_sensor" type="ray">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <pose>0 0 0 0 0 0</pose>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-3.14159265</min_angle>
+            <max_angle>3.14159265</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.12</min>
+          <max>8.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
