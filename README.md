@@ -57,8 +57,11 @@ ros2_robot_course/                          # 工作空间根
         ├── resource/ros2_robot_course
         └── ros2_robot_course/
             ├── send_goal.py                # 命令行一键发导航目标点（免 RViz 鼠标）
+            ├── verify_nav.py               # 自动多目标验收 + 在线采样出量化报告
+            ├── moving_obstacle.py          # 生成会巡逻的动态障碍物（演示动态避障）
             ├── world/
             │   ├── room.world              # 宫殿大厅场景
+            │   ├── moving_obstacle.sdf     # 动态障碍物模型
             │   └── generate_palace.py      # 场景生成脚本
             ├── urdf/
             │   ├── robot.urdf.xacro        # 差速两轮 + 雷达 + 摄像头（源文件）
@@ -157,6 +160,25 @@ ros2 run ros2_robot_course send_goal 0.0 4.5
 
 到达会打印 `✅ 已到达目标点！`，小车自动停车。
 
+### 步骤 7　自动量化验收（亮点）
+
+```bash
+ros2 run ros2_robot_course verify_nav
+```
+
+自动发送多个目标点并在线采样 `/scan`、`/cmd_vel`、`/amcl_pose`，在 `verify_logs/verify_<时间戳>/summary.md` 输出量化报告（到达率、贴障次数、到点位置/朝向误差、最小激光余量、话题实测频率）。
+
+### 步骤 8　动态障碍避障（亮点）
+
+```bash
+# 导航栈运行中，另开终端启动会巡逻的障碍物
+ros2 run ros2_robot_course moving_obstacle
+# 让机器人沿走廊走，观察实时避让
+ros2 run ros2_robot_course verify_nav --goals "4.0,-4.4,0.0;-4.0,-4.4,3.14;0.0,-4.8,1.57"
+# 演示完关闭障碍物
+pkill -9 -x moving_obstacle
+```
+
 ---
 
 ## 五、关键参数调优说明
@@ -178,7 +200,9 @@ ros2 run ros2_robot_course send_goal 0.0 4.5
 **本工程自主编写**：
 - 宫殿大厅场景 `world/room.world`（18m×12m、环形柱廊、浮雕壁柱、金色檐口、中央喷泉雕像、拱形彩窗、多盏暖色点光源，顶部开放）及生成脚本；
 - 机器人模型 `urdf/robot.urdf.xacro`（差速两轮 + 前后万向轮 + 2D 激光雷达 + 前置紫色科幻摄像头）；
-- 全部 launch 文件（Python 格式）、全部 YAML 参数、三套 RViz 配置、`send_goal.py` 命令行工具。
+- 全部 launch 文件（Python 格式）、全部 YAML 参数、三套 RViz 配置、`send_goal.py` 命令行工具；
+- 自动量化验收脚本 `verify_nav.py`：自动发多目标、在线采样三个话题，输出到达率/贴障/误差/余量/频率；
+- 动态障碍物 `moving_obstacle.py` + `world/moving_obstacle.sdf`：导航阶段生成会巡逻的障碍物，演示 Nav2 动态避障/重规划（不影响 SLAM 地图）。
 
 ---
 
@@ -191,6 +215,16 @@ ros2 run ros2_robot_course send_goal 0.0 4.5
 | 导航栈就绪 | 路径规划与到点 | 机器人 / 摄像头 |
 | :---: | :---: | :---: |
 | ![ready](docs/images/nav_ready.jpg) | ![goal](docs/images/nav_goal.jpg) | ![robot](docs/images/robot_gazebo.jpg) |
+
+### 自动量化验收（verify_nav）
+
+| 自动量化验收报告 | 动态障碍物巡逻 | 动态避障验收 |
+| :---: | :---: | :---: |
+| ![verify](docs/images/verify_nav_result.png) | ![obstacle](docs/images/dynamic_obstacle.png) | ![dynamic](docs/images/dynamic_verify.png) |
+
+> 左：`ros2 run ros2_robot_course verify_nav` 自动发多目标并在线采样 `/scan`、`/cmd_vel`、`/amcl_pose`，输出到达率、贴障次数、到点误差、最小激光余量与话题频率（报告见 `verify_logs/`）；
+> 中：`moving_obstacle` 在导航阶段生成会来回巡逻的红色障碍物（不参与建图）；
+> 右：带动态障碍时仍 **3/3 到达**，与移动方块最近擦到 **0.12 m** 未发生碰撞。
 
 ---
 
