@@ -16,7 +16,8 @@ setup(
         (os.path.join('share', package_name, 'launch'),
             glob(os.path.join(package_name, 'launch', '*.launch.py'))),
         (os.path.join('share', package_name, 'world'),
-            glob(os.path.join(package_name, 'world', '*.world'))),
+            glob(os.path.join(package_name, 'world', '*.world')) +
+            glob(os.path.join(package_name, 'world', '*.sdf'))),
         (os.path.join('share', package_name, 'urdf'),
             glob(os.path.join(package_name, 'urdf', '*.xacro')) +
             glob(os.path.join(package_name, 'urdf', '*.urdf'))),
@@ -37,6 +38,8 @@ setup(
     entry_points={
         'console_scripts': [
             'send_goal = ros2_robot_course.send_goal:main',
+            'verify_nav = ros2_robot_course.verify_nav:main',
+            'moving_obstacle = ros2_robot_course.moving_obstacle:main',
         ],
     },
 )

@@ -203,6 +203,48 @@ ros2 run tf2_ros tf2_echo map base_link
 > 到达会打印 `✅ 已到达目标点！`。
 4. 到点判定满足：位置误差 ≤ 0.25 m、朝向误差 ≤ 15°、单点限时 60 s，多点中 n-1 个成功即达标。
 
+### 步骤 7：自动量化验收（生成可复现证据）
+
+在 `nav2_localization.launch.py` 已激活的情况下，另开终端运行自动验收脚本：
+
+```bash
+cd "/home/xieyihan/Documents/Default Project" && source install/setup.bash
+export ROS_DOMAIN_ID=77 ROS_LOCALHOST_ONLY=1
+ros2 run ros2_robot_course verify_nav
+# 自定义目标点：--goals "x,y,yaw;x,y,yaw;..."
+```
+
+`verify_nav` 会自动发送多个目标点，并在**全程在线采样** `/scan`、`/cmd_vel`、`/amcl_pose`，
+把结果写入 `verify_logs/verify_<时间戳>/summary.md`（含 `data.jsonl` 原始数据）。
+本工程一次真实运行的结果如下（[实测]，可直接作为运行证据）：
+
+> 3/3 到达；碰撞/贴障 0 次；最小激光余量 0.532 m；位置误差 ≤ 0.087 m；
+> 朝向误差 ≤ 12.7°；单点耗时 ≤ 34.7 s；`/scan` 9.98 Hz、`/cmd_vel` 19.99 Hz。
+
+> 所有数字由脚本对上述话题在线采样得到，逐条与终端日志一致，可现场复现。
+
+### 步骤 8：动态障碍避障演示（进阶）
+
+除静态宫殿场景外，本工程提供一个**会移动的红色障碍物** `moving_obstacle`：
+它在导航阶段被 spawn 到南侧走廊来回巡逻（只在演示时出现，**不参与建图**，地图保持干净）。
+机器人用 2D 激光实时看到它，Nav2 局部代价地图据此更新，DWB 主动减速/绕行：
+
+```bash
+# 终端 C（导航栈已启动后）：启动动态障碍物
+ros2 run ros2_robot_course moving_obstacle
+# 可用参数：-p x0:=-3.0 -p y0:=-4.4 -p x1:=3.0 -p y1:=-4.4 -p period:=14.0
+```
+
+然后让机器人沿走廊走，即可看到避让：
+
+```bash
+ros2 run ros2_robot_course verify_nav \
+  --goals "4.0,-4.4,0.0;-4.0,-4.4,3.14;0.0,-4.8,1.57"
+```
+
+本工程一次带动态障碍的实测结果（[实测]）：**3/3 到达**，与移动方块最近距离仅 **0.137 m**
+（擦身而过、**未发生碰撞**），位置误差 ≤ 0.093 m、朝向 ≤ 9.98°。
+
 ---
 
 ## 五、话题 / 坐标系约定（答辩讲解用）
@@ -250,7 +292,9 @@ map  ──(AMCL 或 slam_toolbox)──>  odom  ──(diff_drive 插件)──
 - 机器人模型 `urdf/robot.urdf.xacro`（差速两轮 + 万向从动轮 + 二维激光雷达 + 插件与 TF）；
 - 全部 launch 文件（`robot_gazebo / slam / nav2_localization.launch.py`，Python 格式）；
 - 全部 YAML 配置（`slam_toolbox.yaml`、`nav2_params.yaml`，含代价地图、规划器、控制器、AMCL 调参）；
-- 三套 RViz 可视化配置与参考地图生成脚本。
+- 三套 RViz 可视化配置与参考地图生成脚本；
+- 自动量化验收脚本 `verify_nav.py`（`ros2 run ros2_robot_course verify_nav`）：自动发多目标、在线采样 `/scan`/`/cmd_vel`/`/amcl_pose`，输出到达率、贴障次数、到点误差、最小激光余量与话题实测频率；
+- 动态移动障碍物 `moving_obstacle.py` + `world/moving_obstacle.sdf`：导航阶段生成会巡逻的障碍物，用于演示 Nav2 动态避障/重规划（不影响 SLAM 地图）。
 
 ---
 
@@ -328,6 +372,7 @@ free_thresh: 0.196
 | 现场生成的地图图像与元数据 + 加载配置 | `ros2_robot_course/maps/map.pgm`、`map.yaml`（现场 SLAM 后覆盖保存） | ⛳ 需现场建图保存 |
 | README（版本/依赖/建图/保存/定位导航/发目标点步骤） | 本文件第一、三、四节 | ✅ |
 | 运行证据（截图 + ≤3 分钟录屏） | 见下方截图清单 | ⛳ 需自行截图 |
+| 量化验收数据（可复现） | `ros2 run ros2_robot_course verify_nav` → `verify_logs/verify_*/summary.md` | ✅ 已实测 |
 | 第三方包来源 + 本人编写/配置/集成/调试说明 | 本文件第六节 | ✅ |
 
 ### 运行证据截图清单（每次演示各截一张）

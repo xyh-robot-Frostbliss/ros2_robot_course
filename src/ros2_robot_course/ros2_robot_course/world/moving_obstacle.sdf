@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<!--
+  moving_obstacle.sdf —— 动态移动障碍物（演示 Nav2 动态避障/局部重规划）
+
+  由 moving_obstacle.py 在导航阶段 spawn 到仿真世界，并在走廊里来回巡逻。
+  只在导航演示时出现，不参与建图，保证 SLAM 地图干净。
+-->
+<sdf version="1.6">
+  <model name="moving_obstacle">
+    <pose>-3.0 -4.4 0.35 0 0 0</pose>
+    <link name="link">
+      <collision name="collision">
+        <geometry><box><size>0.5 0.5 0.7</size></box></geometry>
+      </collision>
+      <visual name="visual">
+        <geometry><box><size>0.5 0.5 0.7</size></box></geometry>
+        <material>
+          <ambient>0.85 0.10 0.10 1</ambient>
+          <diffuse>0.90 0.12 0.12 1</diffuse>
+          <specular>0.5 0.4 0.4 1</specular>
+          <emissive>0.15 0.0 0.0 1</emissive>
+        </material>
+      </visual>
+      <inertial>
+        <mass>8.0</mass>
+        <inertia><ixx>0.4</ixx><iyy>0.4</iyy><izz>0.4</izz></inertia>
+      </inertial>
+    </link>
+  </model>
+</sdf>
