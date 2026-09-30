@@ -260,10 +260,10 @@ map  ──(AMCL 或 slam_toolbox)──>  odom  ──(diff_drive 插件)──
   `update_min_d/a` 控制更新频率；预置与出生点一致的初始位姿，保证 Nav2 生命周期可自动激活。
 - **代价地图**：机器人按包围圆半径 `robot_radius = 0.25 m`；
   膨胀半径 `inflation_radius = 0.45 m`、`cost_scaling_factor = 3.0`，防止贴墙、撞墙。
-- **全局规划器**：`NavfnPlanner`，`tolerance = 0.20`，`allow_unknown = true`。
+- **全局规划器**：`NavfnPlanner`，`tolerance = 0.15`，`allow_unknown = true`。
 - **局部控制器**：`DWBLocalPlanner`，`max_vel_x = 0.30 m/s`、`max_vel_theta = 1.0 rad/s`，
   critics 含 `BaseObstacle / PathDist / GoalDist / RotateToGoal`，兼顾平顺与避障。
-- **到点判定**：`xy_goal_tolerance = 0.15 m`、`yaw_goal_tolerance = 0.15 rad`（验收 0.25 m / 15° 以内，留余量）。
+- **到点判定**：`xy_goal_tolerance = 0.10 m`、`yaw_goal_tolerance = 0.12 rad`（验收 0.25 m / 15° 以内，留余量）。
 - **速度平滑**：最终 `/cmd_vel` 经 `velocity_smoother` 限幅到 `0.30 m/s / 1.0 rad/s`，避免急停急转。
 - **前置摄像头**：`horizontal_fov = 3.1415 rad`（≈180° 超广角）、640×480 @30Hz、`frame_name = camera_optical_frame`；
   镜头环形灯带用 `Gazebo/PurpleGlow` 自发光材质、镜片用 `Gazebo/DarkMagentaTransparent` 半透明材质配合 `Gazebo/BlueGlow` 内芯，实现紫蓝渐变与镜头边缘紫色光晕。
@@ -297,7 +297,7 @@ map  ──(AMCL 或 slam_toolbox)──>  odom  ──(diff_drive 插件)──
 | 地图现场生成，墙体连续通道清晰 | `slam.launch.py` + teleop 遍历 + `map_saver_cli` 保存到 `maps/` |
 | 重启后加载地图定位，位姿稳定，激光与边界重合，TF 完整 | `nav2_localization.launch.py`（map_server + AMCL），预置初始位姿 + `2D Pose Estimate` 可纠偏 |
 | 多目标导航，n-1 到达，路径清晰，障碍可调整路线，碰撞 < 2 | Nav2（NavFn + DWB + 行为树），验证 2 个连续目标点均成功，目标间直线穿过中央立柱时会自动绕行 |
-| 到点判定 ≤0.25 m / ≤15° / 单点 ≤60 s | `general_goal_checker` 设 0.15 m / 0.15 rad，实测到点位置误差约 0.05 m（空旷目标） |
+| 到点判定 ≤0.25 m / ≤15° / 单点 ≤60 s | `general_goal_checker` 设 0.10 m / 0.12 rad，实测到点位置误差约 0.002~0.18 m |
 | README 命令可复现，逻辑关系清晰 | 本文档第四节 + 第五节 |
 
 ---
