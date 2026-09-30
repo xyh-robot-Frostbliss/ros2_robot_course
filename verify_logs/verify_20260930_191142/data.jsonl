@@ -1,0 +1,3 @@
+{"index": 1, "goal": [4.0, -0.5, 0.0], "result": "SUCCEEDED", "success": true, "duration_s": 25.93, "xy_error_m": 0.083, "yaw_error_deg": 13.56, "min_clearance_m": 0.522, "collision": false}
+{"index": 2, "goal": [-4.0, -0.5, 3.141592653589793], "result": "SUCCEEDED", "success": true, "duration_s": 34.38, "xy_error_m": 0.097, "yaw_error_deg": 9.74, "min_clearance_m": 0.548, "collision": false}
+{"index": 3, "goal": [0.0, 3.0, 1.5707963267948966], "result": "SUCCEEDED", "success": true, "duration_s": 25.71, "xy_error_m": 0.076, "yaw_error_deg": 16.85, "min_clearance_m": 0.68, "collision": false}

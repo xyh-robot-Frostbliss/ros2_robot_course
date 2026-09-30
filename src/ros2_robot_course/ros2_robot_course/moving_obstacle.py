@@ -45,8 +45,8 @@ class MovingObstacle(Node):
         self.declare_parameter('x1', 3.0)
         self.declare_parameter('y1', -4.4)
         self.declare_parameter('z', 0.35)
-        self.declare_parameter('period', 12.0)   # 一个来回的周期（秒）
-        self.declare_parameter('rate', 10.0)     # 更新频率（Hz）
+        self.declare_parameter('period', 14.0)   # 一个来回的周期（秒）
+        self.declare_parameter('rate', 5.0)      # 更新频率（Hz，过高会拖慢 Gazebo）
 
         self.name = self.get_parameter('entity').value
         sdf = self.get_parameter('sdf').value
